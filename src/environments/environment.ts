@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  TRIP_PLANNER_SERVICE_HOST: 'http://localhost:9090',
+  POI_SERVICE_HOST: 'http://localhost:8080',
+  EVENT_SERVICE_HOST: 'http://localhost:8090'
 };
 
 /*
