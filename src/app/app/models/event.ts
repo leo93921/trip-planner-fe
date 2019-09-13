@@ -1,5 +1,5 @@
 import { TypeElement } from './type-element';
-import { Location } from '@angular/common';
+import { Location } from './location';
 
 export class Event {
   id: string;
