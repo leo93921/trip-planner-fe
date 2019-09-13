@@ -10,6 +10,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th scope="col">Title</th>
       <th scope="col">Stops</th>
       <th scope="col">Budget Level</th>
       <th scope="col"></th>
@@ -18,6 +19,7 @@
   <tbody>
     <ng-container *ngIf="page && page.content.length > 0; else noRows">
       <tr *ngFor="let i of page.content">
+        <td>{{ i.title }}</td>
         <td>{{ i.stops.length }}</td>
         <td>{{ i.budgetLevel }}</td>
         <td class="text-right">
