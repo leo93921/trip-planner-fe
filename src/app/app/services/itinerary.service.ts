@@ -22,4 +22,8 @@ export class ItineraryService {
   ): Observable<Page<Itinerary>> {
     return this.http.get<Page<Itinerary>>(`${this.BASE_URL}/${pageNumber}/${pageSize}`);
   }
+
+  public save(itinerary: Itinerary): Observable<Itinerary> {
+    return this.http.post<Itinerary>(`${this.BASE_URL}`, itinerary);
+  }
 }
