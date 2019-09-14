@@ -10,13 +10,16 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './app/home/home.component';
 import { ItineraryHomeComponent } from './app/itinerary/itinerary-home/itinerary-home.component';
 import { ItineraryFormComponent } from './app/itinerary/itinerary-form/itinerary-form.component';
+import { TripHomeComponent } from './app/trip/trip-home/trip-home.component';
+import { ExperienceTableComponent } from './app/components/experience-table/experience-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ItineraryHomeComponent,
-    ItineraryFormComponent
+    ItineraryFormComponent,
+    ExperienceTableComponent
   ],
   imports: [
     BrowserModule,

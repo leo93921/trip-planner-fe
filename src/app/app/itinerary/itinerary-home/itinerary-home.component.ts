@@ -3,6 +3,7 @@ import { ItineraryService } from '../../services/itinerary.service';
 import { Page } from '../../models/page';
 import { Itinerary } from '../../models/itinerary';
 import { ToastService } from '../../services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-itinerary-home',
@@ -15,7 +16,8 @@ export class ItineraryHomeComponent implements OnInit {
 
   constructor(
     private itineraryService: ItineraryService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -39,4 +41,7 @@ export class ItineraryHomeComponent implements OnInit {
     });
   }
 
+  redirect() {
+    this.router.navigateByUrl('/itineraries/new');
+  }
 }

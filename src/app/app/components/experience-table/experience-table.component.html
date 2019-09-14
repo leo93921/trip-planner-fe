@@ -1,0 +1,35 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Stops</th>
+      <th scope="col">Budget Level</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="elements.length > 0; else noRows">
+      <tr *ngFor="let i of elements">
+        <td>{{ i.title }}</td>
+        <td>{{ i.stops.length }}</td>
+        <td>{{ i.budgetLevel }}</td>
+        <td class="text-right">
+          <button class="btn btn-link" (click)="delete(i)">
+            <i class="fas fa-trash-alt text-danger"></i>
+          </button>
+          <button class="btn btn-link" [routerLink]="'/'">
+            <i class="fas fa-arrow-circle-right text-primary"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #noRows>
+      <tr>
+        <td colspan="3"><small>There aren't itineraries saved. Please add one of them.</small></td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>
+<div class="text-right">
+  <button class="btn btn-primary btn-sm" (click)="handleAdd()">Add itinerary</button>
+</div>
