@@ -23,6 +23,9 @@
         <td>{{ i.stops.length }}</td>
         <td>{{ i.budgetLevel }}</td>
         <td class="text-right">
+          <button class="btn btn-link" (click)="delete(i)">
+            <i class="fas fa-trash-alt text-danger"></i>
+          </button>
           <button class="btn btn-link" [routerLink]="'/'">
             <i class="fas fa-arrow-circle-right text-primary"></i>
           </button>
@@ -39,3 +42,4 @@
 <div class="text-right">
   <button class="btn btn-primary btn-sm" [routerLink]="['new']">Add itinerary</button>
 </div>
+

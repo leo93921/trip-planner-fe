@@ -26,4 +26,8 @@ export class ItineraryService {
   public save(itinerary: Itinerary): Observable<Itinerary> {
     return this.http.post<Itinerary>(`${this.BASE_URL}`, itinerary);
   }
+
+  public delete(itinerary: Itinerary): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.BASE_URL}/${itinerary.id}`);
+  }
 }
