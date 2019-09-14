@@ -9,6 +9,7 @@ import { TripStop } from '../../models/trip-stop';
 import { RefType } from '../../models/ref-type';
 import { ItineraryService } from '../../services/itinerary.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-itinerary-form',
@@ -27,7 +28,8 @@ export class ItineraryFormComponent implements OnInit {
     private poiService: POIService,
     private eventService: EventService,
     private itineraryService: ItineraryService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -37,6 +39,8 @@ export class ItineraryFormComponent implements OnInit {
     ).subscribe(res => {
       this.pois = res[0];
       this.events = res[1];
+    }, err => {
+      this.toastService.showError('An error occurred. Check if POI and Event services are up!');
     });
   }
 
@@ -85,6 +89,7 @@ export class ItineraryFormComponent implements OnInit {
     }
 
     this.itineraryService.save(this.itinerary).subscribe(res => {
+      this.toastService.showSuccess('Itinerary saved successfully');
       this.router.navigateByUrl('/itineraries');
     });
   }
