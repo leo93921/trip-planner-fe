@@ -1,0 +1,12 @@
+<div class="jumbotron mt-3">
+  <h1 class="display-5">Trips</h1>
+  <p class="lead">
+    Here you can create a new trip or see the ones already created.
+    They are in the following table. To create a new one, just press the "Add" button.
+  </p>
+</div>
+
+<app-experience-table [elements]="page ? page.content : []"
+  [type]="'EVENT'" (addPressed)="redirect()" (deletePressed)="delete($event)"
+></app-experience-table>
+

@@ -19,7 +19,8 @@ import { ExperienceTableComponent } from './app/components/experience-table/expe
     HomeComponent,
     ItineraryHomeComponent,
     ItineraryFormComponent,
-    ExperienceTableComponent
+    ExperienceTableComponent,
+    TripHomeComponent
   ],
   imports: [
     BrowserModule,

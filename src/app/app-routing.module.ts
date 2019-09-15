@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './app/home/home.component';
 import { ItineraryHomeComponent } from './app/itinerary/itinerary-home/itinerary-home.component';
 import { ItineraryFormComponent } from './app/itinerary/itinerary-form/itinerary-form.component';
+import { TripHomeComponent } from './app/trip/trip-home/trip-home.component';
 
 
 const routes: Routes = [
@@ -10,6 +11,9 @@ const routes: Routes = [
   {path: 'itineraries', children: [
     { path: '', component: ItineraryHomeComponent },
     { path: 'new', component: ItineraryFormComponent }
+  ]},
+  { path: 'trips', children: [
+    { path: '', component: TripHomeComponent }
   ]}
 ];
 
