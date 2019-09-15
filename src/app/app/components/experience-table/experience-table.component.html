@@ -34,5 +34,5 @@
   </tbody>
 </table>
 <div class="text-right">
-  <button class="btn btn-primary btn-sm" (click)="handleAdd()">Add itinerary</button>
+  <button class="btn btn-primary btn-sm" (click)="handleAdd()">{{ isItineraryTable() ? 'Add itinerary' : 'Add trip' }}</button>
 </div>
