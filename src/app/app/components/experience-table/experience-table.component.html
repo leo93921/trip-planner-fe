@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th scope="col">Title</th>
-      <th scope="col">Stops</th>
+      <th scope="col">{{ isItineraryTable() ? 'Stops' : 'Days' }}</th>
       <th scope="col">Budget Level</th>
       <th scope="col"></th>
     </tr>
@@ -11,7 +11,10 @@
     <ng-container *ngIf="elements.length > 0; else noRows">
       <tr *ngFor="let i of elements">
         <td>{{ i.title }}</td>
-        <td>{{ i.stops.length }}</td>
+        <td *ngIf="isItineraryTable(); else daysNumber">{{ i.stops.length }}</td>
+        <ng-template #daysNumber>
+          <td>{{ i.dayBags?.length }}</td>
+        </ng-template>
         <td>{{ i.budgetLevel }}</td>
         <td class="text-right">
           <button class="btn btn-link" (click)="delete(i)">
