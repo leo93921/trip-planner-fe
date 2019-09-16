@@ -52,8 +52,13 @@
     <div class="card-body" droppable (onDrop)="onItemDrop($event)">
       <h5 class="card-title">Drop here POIs or Events</h5>
       <div class="list-group">
-          <div  class="list-group-item"  *ngFor="let item of itinerary.stops">
-            <h5 class="mb-1">{{ item.title }}</h5>
+          <div class="list-group-item"  *ngFor="let item of itinerary.stops">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-1">{{ item.title }}</h5>
+              <span class="badge badge-primary badge-pill">
+                {{ (item.refType === 'TYPE_EVENT' || item.refType === 1) ? 'EVENT' : 'POI'  }}
+              </span>
+            </div>
             <small>{{ item.refId }} - Order: {{ item.visitOrder }}</small>
           </div>
         </div>

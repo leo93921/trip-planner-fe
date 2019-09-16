@@ -44,21 +44,25 @@
   <ngb-tabset>
     <ngb-tab title="Day {{ i+1 }}" *ngFor="let d of trip.dayBags; let i = index">
       <ng-template ngbTabContent>
-
-          <div class="card mt-3 mx-3">
-              <div class="card-header">
-                DayBag
-              </div>
-              <div class="card-body" droppable (onDrop)="onItemDrop($event, i)">
-                <h5 class="card-title">Drop here POIs or Events</h5>
-                <div class="list-group">
-                    <div  class="list-group-item"  *ngFor="let item of d.tripStops">
-                      <h5 class="mb-1">{{ item.title }}</h5>
-                      <small>{{ item.refId }} - Order: {{ item.visitOrder }}</small>
-                    </div>
-                  </div>
+        <div class="card mt-3 mx-3">
+          <div class="card-header">
+            DayBag
+          </div>
+          <div class="card-body" droppable (onDrop)="onItemDrop($event, i)">
+            <h5 class="card-title">Drop here POIs or Events</h5>
+            <div class="list-group">
+              <div class="list-group-item" *ngFor="let item of d.tripStops">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="mb-1">{{ item.title }}</h5>
+                  <span class="badge badge-primary badge-pill">
+                    {{ (item.refType === 'TYPE_EVENT' || item.refType === 1) ? 'EVENT' : 'POI'  }}
+                  </span>
+                </div>
+                <small>{{ item.refId }} - Order: {{ item.visitOrder }}</small>
               </div>
             </div>
+          </div>
+        </div>
       </ng-template>
     </ngb-tab>
   </ngb-tabset>
