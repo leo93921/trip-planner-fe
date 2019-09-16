@@ -21,8 +21,6 @@ export class ItineraryFormComponent implements OnInit {
   itinerary: Itinerary = {} as Itinerary;
   pois: PointOfInterest[] = [];
   events: Event[] = [];
-  selectedPOIs: PointOfInterest[] = [];
-  selectedEvents: Event[] = [];
   private isNewForm: boolean;
 
   constructor(
@@ -43,6 +41,7 @@ export class ItineraryFormComponent implements OnInit {
         });
         this.isNewForm = false;
       } else {
+        this.itinerary.stops = [];
         this.isNewForm = true;
       }
     });
@@ -53,57 +52,30 @@ export class ItineraryFormComponent implements OnInit {
       this.poiService.getPois(),
       this.eventService.getEvents()
     ).subscribe(res => {
-      this.pois = res[0];
-      this.events = res[1];
+      for (const i of res[0]) {
+        this.pois.push({...i, type: 'poi'});
+      }
+      for (const e of res[1]) {
+        this.events.push({...e, type: 'event'});
+      }
     }, err => {
       this.toastService.showError('An error occurred. Check if POI and Event services are up!');
     });
   }
 
-  public togglePOI(poi: PointOfInterest) {
-    const index = this.selectedPOIs.indexOf(poi);
-    if (index === -1) {
-      this.selectedPOIs.push(poi);
-    } else {
-      this.selectedPOIs.splice(index, 1);
-    }
-  }
-
-  public toggleEvent(event: Event) {
-    const index = this.selectedEvents.indexOf(event);
-    if (index === -1) {
-      this.selectedEvents.push(event);
-    } else {
-      this.selectedEvents.splice(index, 1);
-    }
+  onItemDrop(e: any, dayBagIndex: number) {
+    const val = e.dragData;
+    const stop = {} as TripStop;
+    stop.location = val.geoLocation;
+    stop.refType = val.type === 'event' ? RefType.TYPE_EVENT : RefType.TYPE_POI;
+    stop.refId = val.id;
+    stop.visitOrder = this.itinerary.stops.length + 1;
+    stop.title = val.title;
+    stop.shortDescription = val.shortDescription;
+    this.itinerary.stops.push(stop);
   }
 
   public save() {
-    let i = 0;
-    this.itinerary.stops = [];
-
-    for (const p of this.selectedPOIs) {
-      const t = new TripStop();
-      t.location = p.geoLocation;
-      t.refId = p.id;
-      t.refType = RefType.TYPE_POI;
-      t.visitOrder = i;
-      this.itinerary.stops.push(t);
-
-      i++;
-    }
-
-    for (const p of this.selectedEvents) {
-      const t = new TripStop();
-      t.location = p.geoLocation;
-      t.refId = p.id;
-      t.refType = RefType.TYPE_EVENT;
-      t.visitOrder = i;
-      this.itinerary.stops.push(t);
-
-      i++;
-    }
-
     let subscription;
     if (this.isNewForm) {
       subscription = this.itineraryService.save(this.itinerary);
