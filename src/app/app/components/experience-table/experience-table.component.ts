@@ -13,6 +13,7 @@ export class ExperienceTableComponent implements OnInit {
   @Input() elements: Itinerary[]|Trip[] = [];
   @Output() addPressed = new EventEmitter();
   @Output() deletePressed = new EventEmitter();
+  @Output() itemPressed = new EventEmitter();
 
   constructor() { }
 
@@ -29,6 +30,10 @@ export class ExperienceTableComponent implements OnInit {
 
   delete(itinerary: Itinerary|Trip) {
     this.deletePressed.emit(itinerary);
+  }
+
+  itemPress(experience: Itinerary|Trip) {
+    this.itemPressed.emit(experience);
   }
 
 }
