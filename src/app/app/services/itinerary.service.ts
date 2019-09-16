@@ -30,4 +30,12 @@ export class ItineraryService {
   public delete(itinerary: Itinerary): Observable<boolean> {
     return this.http.delete<boolean>(`${this.BASE_URL}/${itinerary.id}`);
   }
+
+  public update(itinerary: Itinerary): Observable<Itinerary> {
+    return this.http.put<Itinerary>(`${this.BASE_URL}`, itinerary);
+  }
+
+  public getItineraryByID(id: string): Observable<Itinerary> {
+    return this.http.get<Itinerary>(`${this.BASE_URL}/${id}`);
+  }
 }
