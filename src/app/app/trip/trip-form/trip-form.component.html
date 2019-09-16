@@ -1,0 +1,75 @@
+<form #form="ngForm">
+  <div class="form-group mt-3">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" name="title" id="title" [(ngModel)]="trip.title">
+  </div>
+  <div class="form-group mt-3">
+    <label for="description">Description</label>
+    <textarea name="description" id="description" class="form-control" rows="5" [(ngModel)]="trip.description"></textarea>
+  </div>
+  <div class="row">
+    <div class="col mt-3">
+      <label for="maxBudget">Max budget</label>
+      <input type="text" class="form-control" name="maxBudget" id="maxBudget" [(ngModel)]="trip.maxBudget">
+    </div>
+    <div class="col mt-3">
+      <label for="budgetLevel">Budget Level</label>
+      <select class="form-control" name="budgetLevel" id="budgetLevel" [(ngModel)]="trip.budgetLevel">
+        <option value="1">1 - Min</option>
+        <option value="2">2</option>
+        <option value="3">3 - Middle</option>
+        <option value="4">4</option>
+        <option value="5">5 - Max</option>
+      </select>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row mb-3">
+    <div class="col-6">
+      <div class="list-group">
+        <div draggable class="list-group-item" [dragData]="item" *ngFor="let item of events">
+          <h5 class="mb-1">{{ item.title }}</h5>
+          <small>{{ item.id }}</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="list-group">
+        <div draggable class="list-group-item" [dragData]="item" *ngFor="let item of pois">
+          <h5 class="mb-1">{{ item.title }}</h5>
+          <small>{{ item.id }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ngb-tabset>
+    <ngb-tab title="Day {{ i+1 }}" *ngFor="let d of trip.dayBags; let i = index">
+      <ng-template ngbTabContent>
+
+          <div class="card mt-3 mx-3">
+              <div class="card-header">
+                DayBag
+              </div>
+              <div class="card-body" droppable (onDrop)="onItemDrop($event, i)">
+                <h5 class="card-title">Drop here POIs or Events</h5>
+                <div class="list-group">
+                    <div  class="list-group-item"  *ngFor="let item of d.tripStops">
+                      <h5 class="mb-1">{{ item.title }}</h5>
+                      <small>{{ item.refId }} - Order: {{ item.visitOrder }}</small>
+                    </div>
+                  </div>
+              </div>
+            </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  <div class="text-right m-3">
+    <button class="btn btn-sm btn-light mr-1" (click)="addDay()">Add day</button>
+    <button class="btn btn-sm btn-primary" (click)="saveTrip()">Save</button>
+  </div>
+</form>
+
+

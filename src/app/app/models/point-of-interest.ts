@@ -6,4 +6,5 @@ export class PointOfInterest {
   shortDescription: string;
   geoLocation: Location;
   typeElement: TypeElement;
+  type?: string;
 }

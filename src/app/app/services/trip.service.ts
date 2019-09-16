@@ -23,4 +23,8 @@ export class TripService {
   delete(trip: Trip): Observable<boolean> {
     return this.http.delete<boolean>(`${this.BASE_URL}/${trip.id}`);
   }
+
+  save(trip: Trip): Observable<Trip> {
+    return this.http.post<Trip>(this.BASE_URL, trip);
+  }
 }

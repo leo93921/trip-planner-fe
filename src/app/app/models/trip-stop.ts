@@ -10,6 +10,8 @@ export class TripStop {
   location: Location;
   warningPresent: boolean;
   warningMessages: string[];
+  title?: string;
+  shortDescription?: string;
 }
 
 

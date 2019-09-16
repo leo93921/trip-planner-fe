@@ -7,4 +7,5 @@ export class Event {
   price: string;
   freeEntry: boolean;
   geoLocation: Location;
+  type?: string;
 }

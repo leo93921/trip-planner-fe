@@ -16,7 +16,8 @@ export class TripHomeComponent implements OnInit {
 
   constructor(
     private tripService: TripService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -41,6 +42,10 @@ export class TripHomeComponent implements OnInit {
     }, err => {
       this.toastService.showError('An error occurred.');
     });
+  }
+
+  redirect() {
+    this.router.navigate(['trips', 'new']);
   }
 
 }
