@@ -4,6 +4,7 @@ import { Page } from '../../models/page';
 import { Trip } from '../../models/trip';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
+import { Experience } from '../../models/experience';
 
 @Component({
   selector: 'app-trip-home',
@@ -46,6 +47,10 @@ export class TripHomeComponent implements OnInit {
 
   redirect() {
     this.router.navigate(['trips', 'new']);
+  }
+
+  itemPress($event: Experience) {
+    this.router.navigate(['trips', 'update', $event.id]);
   }
 
 }

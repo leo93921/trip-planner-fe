@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { EventService } from '../../services/event.service';
 import { POIService } from '../../services/poi.service';
 import { ToastService } from '../../services/toast.service';
 import { Event } from '../../models/event';
 import { PointOfInterest } from '../../models/point-of-interest';
-import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Trip } from '../../models/trip';
 import { DayBag } from '../../models/day-bag';
 import { TripStop } from '../../models/trip-stop';
 import { RefType } from '../../models/ref-type';
 import { TripService } from '../../services/trip.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-trip-form',
@@ -20,19 +19,36 @@ import { Router } from '@angular/router';
 })
 export class TripFormComponent implements OnInit {
 
+  @Input() trip: Trip = {} as Trip;
   events: Event[] = [];
   pois: PointOfInterest[] = [];
-  trip: Trip = {} as Trip;
+  private isNewForm: boolean;
 
   constructor(
     private eventService: EventService,
     private poiService: POIService,
     private toastService: ToastService,
     private tripService: TripService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
-    this.trip.dayBags = [];
-    this.addDay();
+
+    this.activatedRoute.url.subscribe(segments => {
+      if ((segments[0].path) === 'new') {
+        this.trip.dayBags = [];
+        this.addDay();
+        this.isNewForm = true;
+      } else {
+        // Update
+        this.activatedRoute.params.subscribe(params => {
+          const tripID = params.tripID;
+          this.tripService.findByID(tripID).subscribe(trip => {
+            this.trip = trip;
+          });
+        });
+        this.isNewForm = false;
+      }
+    });
   }
 
   ngOnInit() {
@@ -70,7 +86,14 @@ export class TripFormComponent implements OnInit {
   }
 
   saveTrip() {
-    this.tripService.save(this.trip).subscribe(res => {
+    this.trip.userId = '_user_id_from_token';
+    let subscription;
+    if (this.isNewForm) {
+      subscription = this.tripService.save(this.trip);
+    } else {
+      subscription = this.tripService.update(this.trip);
+    }
+    subscription.subscribe(res => {
       this.toastService.showSuccess('The trip has been saved successfully.');
       this.router.navigateByUrl('/trips');
     }, err => {

@@ -15,7 +15,8 @@ const routes: Routes = [
   ]},
   { path: 'trips', children: [
     { path: '', component: TripHomeComponent },
-    { path: 'new', component: TripFormComponent }
+    { path: 'new', component: TripFormComponent },
+    { path: 'update/:tripID', component: TripFormComponent }
   ]}
 ];
 
