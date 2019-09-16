@@ -6,7 +6,7 @@
   </p>
 </div>
 
-<app-experience-table [elements]="page ? page.content : []"
+<app-experience-table [elements]="page ? page.content : []" (itemPressed)="goTo($event)"
   [type]="'ITINERARY'" (addPressed)="redirect()" (deletePressed)="delete($event)"
 ></app-experience-table>
 

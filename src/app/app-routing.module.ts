@@ -11,7 +11,8 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'itineraries', children: [
     { path: '', component: ItineraryHomeComponent },
-    { path: 'new', component: ItineraryFormComponent }
+    { path: 'new', component: ItineraryFormComponent },
+    { path: 'update/:id', component: ItineraryFormComponent }
   ]},
   { path: 'trips', children: [
     { path: '', component: TripHomeComponent },

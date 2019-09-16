@@ -8,7 +8,7 @@ import { Itinerary } from '../../models/itinerary';
 import { TripStop } from '../../models/trip-stop';
 import { RefType } from '../../models/ref-type';
 import { ItineraryService } from '../../services/itinerary.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 
 @Component({
@@ -23,14 +23,30 @@ export class ItineraryFormComponent implements OnInit {
   events: Event[] = [];
   selectedPOIs: PointOfInterest[] = [];
   selectedEvents: Event[] = [];
+  private isNewForm: boolean;
 
   constructor(
     private poiService: POIService,
     private eventService: EventService,
     private itineraryService: ItineraryService,
     private router: Router,
-    private toastService: ToastService
-  ) { }
+    private toastService: ToastService,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.activatedRoute.url.subscribe(segments => {
+      if ((segments[0].path) === 'update') {
+        this.activatedRoute.params.subscribe(params => {
+          const id = params.id;
+          this.itineraryService.getItineraryByID(id).subscribe(itinerary => {
+            this.itinerary = itinerary;
+          });
+        });
+        this.isNewForm = false;
+      } else {
+        this.isNewForm = true;
+      }
+    });
+  }
 
   ngOnInit() {
     forkJoin(
@@ -88,7 +104,14 @@ export class ItineraryFormComponent implements OnInit {
       i++;
     }
 
-    this.itineraryService.save(this.itinerary).subscribe(res => {
+    let subscription;
+    if (this.isNewForm) {
+      subscription = this.itineraryService.save(this.itinerary);
+    } else {
+      subscription = this.itineraryService.update(this.itinerary);
+    }
+
+    subscription.subscribe(res => {
       this.toastService.showSuccess('Itinerary saved successfully');
       this.router.navigateByUrl('/itineraries');
     });

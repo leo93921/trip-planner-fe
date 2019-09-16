@@ -44,4 +44,8 @@ export class ItineraryHomeComponent implements OnInit {
   redirect() {
     this.router.navigateByUrl('/itineraries/new');
   }
+
+  goTo($event) {
+    this.router.navigate(['itineraries', 'update', $event.id]);
+  }
 }
