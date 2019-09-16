@@ -27,4 +27,12 @@ export class TripService {
   save(trip: Trip): Observable<Trip> {
     return this.http.post<Trip>(this.BASE_URL, trip);
   }
+
+  findByID(id: string): Observable<Trip> {
+    return this.http.get<Trip>(`${this.BASE_URL}/${id}`);
+  }
+
+  update(trip: Trip): Observable<Trip> {
+    return this.http.put<Trip>(this.BASE_URL, trip);
+  }
 }
